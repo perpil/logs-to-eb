@@ -5,7 +5,7 @@ covered [here](https://speedrun.nobackspacecrew.com/blog/2023/10/12/totally-asyn
 
 # Code
 
-The CDK stack to create the two lambda, an event bus and subscription filter:
+The CDK stack to create the two lambdas, an event bus and subscription filter:
 
 [CDK stack](lib/logs-to-eb-stack.ts)
 
