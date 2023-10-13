@@ -9,6 +9,7 @@ import * as busCdk from 'aws-cdk-lib/aws-events';
 export class LogsToEbStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+    const DEFAULT_EVENT_BUS_NAME = 'slack';
 
     // create a lambda function that writes the message to the log group
     const messengerLambdaFunction = new NodejsFunction(
@@ -18,6 +19,9 @@ export class LogsToEbStack extends cdk.Stack {
         functionName: 'Messenger',
         runtime: lambda.Runtime.NODEJS_18_X,
         entry: 'src/messenger.ts',
+        environment: {
+          DEFAULT_EVENT_BUS_NAME,
+        },
         handler: 'handler',
       }
     );
@@ -32,9 +36,6 @@ export class LogsToEbStack extends cdk.Stack {
         functionName: 'Bridgify',
         runtime: lambda.Runtime.NODEJS_18_X,
         memorySize: 512,
-        environment: {
-          DEFAULT_EVENT_BUS_NAME: 'slack',
-        },
         entry: 'src/bridgify.ts',
         handler: 'handler',
       }
@@ -52,7 +53,7 @@ export class LogsToEbStack extends cdk.Stack {
     );
 
     const bus = new busCdk.EventBus(this, 'SlackEventBus', {
-      eventBusName: 'slack',
+      eventBusName: DEFAULT_EVENT_BUS_NAME,
     });
 
     bus.grantPutEventsTo(bridgifyFunction);
