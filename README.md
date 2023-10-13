@@ -26,6 +26,20 @@ npm install
 cdk deploy
 ```
 
+# Invoking
+
+If you have [Speedrun installed](https://github.com/No-Backspace-Crew/Speedrun/wiki/Getting-Started#installation) and enabled on this repository and have [configured it with a role that allows you to invoke lambdas](https://github.com/No-Backspace-Crew/Speedrun/wiki/Creating-Speedrun-Roles), you can invoke the messenger lambda with:
+
+```
+#!lambda
+~~~functionUrl=Function URL{suppress: true}~~~
+{
+  "message": ~~~Message {transform: 'JSON.stringify(value)'}~~~
+}
+```
+
+The function url will be printed in the output of the CDK deploy command.
+
 ## Useful commands
 
 - `npm install` get all of the packages

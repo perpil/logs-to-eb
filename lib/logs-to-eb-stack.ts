@@ -21,7 +21,7 @@ export class LogsToEbStack extends cdk.Stack {
         handler: 'handler',
       }
     );
-    messengerLambdaFunction.addFunctionUrl({
+    let functionUrl = messengerLambdaFunction.addFunctionUrl({
       authType: lambda.FunctionUrlAuthType.AWS_IAM,
     });
 
@@ -56,5 +56,9 @@ export class LogsToEbStack extends cdk.Stack {
     });
 
     bus.grantPutEventsTo(bridgifyFunction);
+
+    new cdk.CfnOutput(this, 'FunctionUrl', {
+      value: functionUrl.url,
+    });
   }
 }
